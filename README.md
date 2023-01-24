@@ -1,15 +1,15 @@
 ## Users_テーブル
 
-| Column             | Type     | Option                    |
-| ------------------ | -------- | ------------------------- |
-| nickname           | string   | null: false               |
-| email              | string   | null: false, unique: true |
-| encrypted_password | string   | null: false               |
-| family_name_kanji  | string   | null: false               |
-| first_name_kanji   | string   | null: false               |
-| family_name_kana   | string   | null: false               |
-| first_name_kana    | string   | null: false               |
-| birthday           | datetime | null: false               |
+| Column             | Type   | Option                    |
+| ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false               |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false               |
+| family_name_kanji  | string | null: false               |
+| first_name_kanji   | string | null: false               |
+| family_name_kana   | string | null: false               |
+| first_name_kana    | string | null: false               |
+| birthday           | date   | null: false               |
 
 
 ## Association
@@ -29,7 +29,7 @@
 | prefecture_id   | integer    | null: false                    |
 | delivery_day_id | integer    | null: false                    |
 | price           | integer    | null: false                    |
-| user_id         | references | null: false, foreign_key: true |
+| user            | references | null: false, foreign_key: true |
 
 ## Association
 - belongs_to :user
@@ -38,10 +38,10 @@
 
 ## Sales_テーブル
 
-| Column  | Type       | Option                         |
-| ------- | ---------- | ------------------------------ |
-| item_id | references | null: false, foreign_key: true |
-| user_id | references | null: false, foreign_key: true |
+| Column | Type       | Option                         |
+| ------ | ---------- | ------------------------------ |
+| item   | references | null: false, foreign_key: true |
+| user   | references | null: false, foreign_key: true |
 
 ## Association
 - belongs_to :item
@@ -59,7 +59,7 @@
 | house_number  | string     | null: false                    |
 | building_name | string     |                                |
 | phone_number  | string     | null: false                    |
-| sale_id       | references | null: false, foreign_key: true |
+| sale          | references | null: false, foreign_key: true |
 
 ## Association
 - belongs_to :sale
