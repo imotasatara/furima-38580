@@ -6,7 +6,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'ユーザー新規登録' do
-
     context '新規登録できないとき' do
       it 'nicknameが空では登録できない' do
         @user.nickname = ''
@@ -23,12 +22,12 @@ RSpec.describe User, type: :model do
         another_user = FactoryBot.build(:user)
         another_user.email = @user.email
         another_user.valid?
-        expect(another_user.errors.full_messages).to include("Email has already been taken")
+        expect(another_user.errors.full_messages).to include('Email has already been taken')
       end
       it 'emailは@を含まないと登録できない' do
         @user.email = 'testmail'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Email is invalid")
+        expect(@user.errors.full_messages).to include('Email is invalid')
       end
       it 'パスワードが空では登録できない' do
         @user.password = ''
@@ -45,13 +44,13 @@ RSpec.describe User, type: :model do
         @user.password = 'aa123'
         @user.password_confirmation = 'aa123'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+        expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
       it 'passwordが数字だけでは登録できない' do
         @user.password = '111111'
         @user.password_confirmation = '111111'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is invalid. Include both letters and numbers")
+        expect(@user.errors.full_messages).to include('Password is invalid. Include both letters and numbers')
       end
       it 'family_name_kanjiが空では登録できない' do
         @user.family_name_kanji = ''
@@ -66,12 +65,12 @@ RSpec.describe User, type: :model do
       it 'family_name_kanjiが半角では登録できない' do
         @user.family_name_kanji = 'aaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Family name kanji is invalid. Input full-width characters")
+        expect(@user.errors.full_messages).to include('Family name kanji is invalid. Input full-width characters')
       end
       it 'first_name_kanjiが半角では登録できない' do
         @user.first_name_kanji = 'aaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name kanji is invalid. Input full-width characters")
+        expect(@user.errors.full_messages).to include('First name kanji is invalid. Input full-width characters')
       end
       it 'family_name_kanaが空では登録できない' do
         @user.family_name_kana = ''
@@ -86,12 +85,12 @@ RSpec.describe User, type: :model do
       it 'family_name_kanaが半角では登録できない' do
         @user.family_name_kana = 'aaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Family name kana is invalid. Input full-width characters")
+        expect(@user.errors.full_messages).to include('Family name kana is invalid. Input full-width characters')
       end
       it 'first_name_kanaが半角では登録できない' do
         @user.first_name_kana = 'aaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name kana is invalid. Input full-width characters")
+        expect(@user.errors.full_messages).to include('First name kana is invalid. Input full-width characters')
       end
       it '生年月日が空では登録できない' do
         @user.birthday = ''
