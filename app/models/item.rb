@@ -4,8 +4,7 @@ class Item < ApplicationRecord
   end
   with_options presence: true do
     validates :price,
-      numericality: {only_integer: true},
-      format: { with: /\A[0-9]+\z/, message: "is invalid. Input half-width characters" },
+      numericality: { with: /\A[0-9]+\z/, message: "is invalid. Input half-width characters" },
       inclusion: { in: 300..9999999, message: "is out of setting range" }
   end
   validates :image, :item_name, :description, presence: true
