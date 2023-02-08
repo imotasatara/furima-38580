@@ -8,11 +8,9 @@ function profit (){
 
     const addTaxDom = document.getElementById("add-tax-price");
     addTaxDom.innerHTML = Math.floor((inputValue * tax)/100);
-    console.log(addTaxDom.innerHTML);
 
     const profit = document.getElementById("profit");
     profit.innerHTML = Math.floor(inputValue - addTaxDom.innerHTML);
-    console.log(profit.innerHTML);
   })
 };
 
