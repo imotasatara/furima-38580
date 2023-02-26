@@ -10,4 +10,8 @@ class SalesAddress
   end
   validates :prefecture_id, numericality: {other_than: 1}
 
+  def save
+    sale = Sale.create(item: item.id, user: user.id)
+    Shipment.create(postal_code: postal_code, prefecture_id: prefecture_id, town_name: town_name, house_number: house_number, building_name: building_name, phone_number: phone_number, sale: sale.id)
+  end
 end
