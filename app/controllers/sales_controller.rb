@@ -1,4 +1,5 @@
 class SalesController < ApplicationController
+  before_action :move_to_index
   before_action :set_item
 
   def index
@@ -18,11 +19,20 @@ class SalesController < ApplicationController
   private
 
   def sales_params
-    params.require(:sales_address).permit(:postal_code, :prefecture_id, :town_name, :house_number, :building_name, :phone_number, :sale_id,).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:sales_address).permit(
+      :postal_code, :prefecture_id, :town_name, :house_number, :building_name, :phone_number, :sale_id
+    ).merge(
+      user_id: current_user.id, item_id: params[:item_id]
+    )
+  end
+
+  def move_to_index
+    return if user_signed_in?
+
+    redirect_to new_user_session_path
   end
 
   def set_item
     @item = Item.find(params[:item_id])
   end
-  
 end
