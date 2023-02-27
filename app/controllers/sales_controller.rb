@@ -1,5 +1,6 @@
 class SalesController < ApplicationController
   before_action :move_to_index
+  before_action :correct_user
   before_action :set_item
 
   def index
@@ -30,6 +31,13 @@ class SalesController < ApplicationController
     return if user_signed_in?
 
     redirect_to new_user_session_path
+  end
+
+  def correct_user
+    @item = Item.find(params[:item_id])
+    if @item.user_id == current_user.id
+      redirect_to(root_path)
+    end
   end
 
   def set_item
