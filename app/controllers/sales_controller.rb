@@ -1,4 +1,5 @@
 class SalesController < ApplicationController
+  before_action :move_to_session
   before_action :move_to_index
   before_action :correct_user
   before_action :set_item
@@ -27,10 +28,17 @@ class SalesController < ApplicationController
     )
   end
 
-  def move_to_index
+  def move_to_session
     return if user_signed_in?
 
     redirect_to new_user_session_path
+  end
+
+  def move_to_index
+    @item = Item.find(params[:item_id])
+    if @item.sale.present?
+      redirect_to(root_path)
+    end
   end
 
   def correct_user

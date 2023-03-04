@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :move_to_index, except: [:index, :show]
+  before_action :move_to_session, except: [:index, :show]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :set_item, only: [:update, :show, :edit, :destroy]
 
@@ -17,6 +17,12 @@ class ItemsController < ApplicationController
       redirect_to root_path
     else
       render :new
+    end
+  end
+
+  def edit
+    if @item.sale.present?
+      redirect_to root_path
     end
   end
 
@@ -40,7 +46,7 @@ class ItemsController < ApplicationController
                                  :delivery_day_id, :price).merge(user_id: current_user.id)
   end
 
-  def move_to_index
+  def move_to_session
     return if user_signed_in?
 
     redirect_to new_user_session_path
