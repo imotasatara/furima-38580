@@ -11,6 +11,7 @@ class SalesController < ApplicationController
   def create
     @sales_address = SalesAddress.new(sales_params)
     if @sales_address.valid?
+      pay_item
       @sales_address.save
       redirect_to root_path
     else
@@ -24,7 +25,7 @@ class SalesController < ApplicationController
     params.require(:sales_address).permit(
       :postal_code, :prefecture_id, :town_name, :house_number, :building_name, :phone_number, :sale_id
     ).merge(
-      user_id: current_user.id, item_id: params[:item_id]
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
   end
 
@@ -50,5 +51,14 @@ class SalesController < ApplicationController
 
   def set_item
     @item = Item.find(params[:item_id])
+  end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: sales_params[:token],
+      currency: 'jpy'
+    )
   end
 end
