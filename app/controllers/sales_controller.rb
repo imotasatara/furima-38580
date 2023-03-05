@@ -37,16 +37,16 @@ class SalesController < ApplicationController
 
   def move_to_index
     @item = Item.find(params[:item_id])
-    if @item.sale.present?
-      redirect_to(root_path)
-    end
+    return unless @item.sale.present?
+
+    redirect_to(root_path)
   end
 
   def correct_user
     @item = Item.find(params[:item_id])
-    if @item.user_id == current_user.id
-      redirect_to(root_path)
-    end
+    return unless @item.user_id == current_user.id
+
+    redirect_to(root_path)
   end
 
   def set_item
@@ -54,7 +54,7 @@ class SalesController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: sales_params[:token],

@@ -80,6 +80,11 @@ RSpec.describe SalesAddress, type: :model do
         @sales_address.valid?
         expect(@sales_address.errors.full_messages).to include("User can't be blank")
       end
+      it 'tokenが空では登録できないこと' do
+        @sales_address.token = nil
+        @sales_address.valid?
+        expect(@sales_address.errors.full_messages).to include("Token can't be blank")
+      end
     end
   end
 end
