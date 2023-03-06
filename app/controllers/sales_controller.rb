@@ -1,8 +1,8 @@
 class SalesController < ApplicationController
+  before_action :set_item
   before_action :move_to_session
   before_action :move_to_index
   before_action :correct_user
-  before_action :set_item
 
   def index
     @sales_address = SalesAddress.new
@@ -23,7 +23,7 @@ class SalesController < ApplicationController
 
   def sales_params
     params.require(:sales_address).permit(
-      :postal_code, :prefecture_id, :town_name, :house_number, :building_name, :phone_number, :sale_id
+      :postal_code, :prefecture_id, :town_name, :house_number, :building_name, :phone_number
     ).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
@@ -36,14 +36,12 @@ class SalesController < ApplicationController
   end
 
   def move_to_index
-    @item = Item.find(params[:item_id])
     return unless @item.sale.present?
 
     redirect_to(root_path)
   end
 
   def correct_user
-    @item = Item.find(params[:item_id])
     return unless @item.user_id == current_user.id
 
     redirect_to(root_path)

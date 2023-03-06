@@ -80,6 +80,11 @@ RSpec.describe SalesAddress, type: :model do
         @sales_address.valid?
         expect(@sales_address.errors.full_messages).to include("User can't be blank")
       end
+      it 'itemが紐付いていないと保存できない' do
+        @sales_address.item_id = nil
+        @sales_address.valid?
+        expect(@sales_address.errors.full_messages).to include("Item can't be blank")
+      end
       it 'tokenが空では登録できないこと' do
         @sales_address.token = nil
         @sales_address.valid?
