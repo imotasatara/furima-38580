@@ -10,6 +10,7 @@ class Item < ApplicationRecord
   validates :image, :item_name, :description, presence: true
 
   belongs_to :user
+  has_one :sale
   has_one_attached :image
 
   extend ActiveHash::Associations::ActiveRecordExtensions
